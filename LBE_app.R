@@ -11,27 +11,27 @@ data <- data[3:55, ]
 data[1:53, ] <- apply(data[1:53, ], 2, function(x)(gsub("\\.", "", x, perl=TRUE)))
 data[1:53, ] <- apply(data[1:53, ], 2, function(x)(gsub("x", NA, x, perl=TRUE)))
 data[, 1:21] <- apply(data, 2, as.numeric)
-colnames(data) <- c("ano", "total", "todos_água_doce", "lampreia", "sável", "enguias",
-                    "todos_marinhos", "atum", "biqueirão", "carapau", "cavala", "peixe_espada_preto", "sardinha",
-                    "todos_crustáceos", "gambas", "lagostim", "caranguejo",
-                    "todos_moluscos", "berbigão", "choco", "polvo")
+colnames(data) <- c("ano", "total", "todos.peixes.agua.doce", "lampreia", "savel", "enguias",
+                    "todos.peixes.marinhos", "atum", "biqueirao", "carapau", "cavala", "peixe.espada.preto", "sardinha",
+                    "todos.crustaceos", "gambas", "lagostim", "caranguejo",
+                    "todos.moluscos", "berbigao", "choco", "polvo")
 
 data.total <- data[1:53, 1:2]
 
 data.all <- data[34:53, -2]
-data.all$outros_água_doce <- apply(data.all, 1, function(table)(table["todos_água_doce"] - table["lampreia"] - table["sável"] - table["enguias"]))
-data.all$outros_marinhos <- apply(data.all, 1, function(table)(table["todos_marinhos"] - table["atum"] - table["biqueirão"] - table["carapau"] - table["cavala"] - table["peixe_espada_preto"] - table["sardinha"]))
-data.all$outros_crustáceos <- apply(data.all, 1, function(table)(table["todos_crustáceos"] - table["gambas"] - table["lagostim"] - table["caranguejo"]))
-data.all$outros_moluscos <- apply(data.all, 1, function(table)(table["todos_moluscos"] - table["berbigão"] - table["choco"] - table["polvo"]))
+data.all$outros.peixes.agua.doce <- apply(data.all, 1, function(table)(table["todos.peixes.agua.doce"] - table["lampreia"] - table["savel"] - table["enguias"]))
+data.all$outros.peixes.marinhos <- apply(data.all, 1, function(table)(table["todos.peixes.marinhos"] - table["atum"] - table["biqueirao"] - table["carapau"] - table["cavala"] - table["peixe.espada.preto"] - table["sardinha"]))
+data.all$outros.crustaceos <- apply(data.all, 1, function(table)(table["todos.crustaceos"] - table["gambas"] - table["lagostim"] - table["caranguejo"]))
+data.all$outros.moluscos <- apply(data.all, 1, function(table)(table["todos.moluscos"] - table["berbigao"] - table["choco"] - table["polvo"]))
 
 data.all.long <- data.all %>%
-  pivot_longer(cols=-ano, names_to="Espécie", values_to="toneladas")
+  pivot_longer(cols=-ano, names_to="especie", values_to="toneladas")
 
-data.all.long$Espécie <- factor(data.all.long$Espécie,
-                                levels=c("todos_água_doce", "enguias", "lampreia", "sável", "outros_água_doce",
-                                         "todos_marinhos", "atum", "biqueirão", "carapau", "cavala", "peixe_espada_preto", "sardinha", "outros_marinhos",
-                                         "todos_crustáceos", "caranguejo", "gambas", "lagostim",  "outros_crustáceos",
-                                         "todos_moluscos", "berbigão", "choco", "polvo", "outros_moluscos"))
+data.all.long$especie <- factor(data.all.long$especie,
+                                levels=c("todos.peixes.agua.doce", "enguias", "lampreia", "savel", "outros.peixes.agua.doce",
+                                         "todos.peixes.marinhos", "atum", "biqueirao", "carapau", "cavala", "peixe.espada.preto", "sardinha", "outros.peixes.marinhos",
+                                         "todos.crustaceos", "caranguejo", "gambas", "lagostim",  "outros.crustaceos",
+                                         "todos.moluscos", "berbigao", "choco", "polvo", "outros.moluscos"))
 
 
 # Define UI for application
@@ -40,8 +40,11 @@ ui <- fluidPage(
     titlePanel(
         h1("Peixe Capturado em Portugal", align = "center")
     ),
+    # 1st row
     fluidRow(
+        # 1st col
         column(1, div(style = "height:20px;"),),
+        # 2nd col
         column(4, div(style = "height:20px;"),
             sliderInput("years_total",
                 "Intervalo de anos",
@@ -52,17 +55,23 @@ ui <- fluidPage(
                 ticks = FALSE
             )
         ),
+        # 3rd col
         column(7, div(style = "height:20px;"),
             plotOutput("totalPlot", width="600px", height="300px")
         )
     ),
+    # 2nd row
     fluidRow(
+        # 1st col
         column(1, div(style = "height:20px;"),),
+        # 2nd col
         column(4, div(style = "height:20px;"),
             checkboxGroupInput("vars_fresh",
                 "Peixes de água doce",
                 choiceNames = c("todos", "enguias", "lampreias", "sável", "outros"),
-                choiceValues = c("todos_água_doce","enguias", "lampreia", "sável", "outros_água_doce")
+                choiceValues = c("todos.peixes.agua.doce","enguias", "lampreia", "savel", "outros.peixes.agua.doce")
+            ),
+            actionButton("run_fresh", "Criar gráfico"
             ),
             sliderInput("years_fresh",
                 "Intervalo de anos",
@@ -72,19 +81,24 @@ ui <- fluidPage(
                 sep = "",
                 ticks = FALSE
             ),
-            actionButton("run_fresh", "Criar gráfico")
         ),
+        # 3rd col
         column(7, div(style = "height:20px;"),
             plotOutput("freshPlot", width="600px", height="300px")
         )
     ),
+    # 3rd row
     fluidRow(
+        # 1st col
         column(1, div(style = "height:20px;"),),
+        # 2nd col
         column(4, div(style = "height:20px;"),
             checkboxGroupInput("vars_salt",
                 "Peixes marinhos",
                 choiceNames = c("todos", "atum", "biqueirão", "carapau", "cavala", "peixe espada preto", "sardinha", "outros"),
-                choiceValues = c("todos_marinhos", "atum", "biqueirão", "carapau", "cavala", "peixe_espada_preto", "sardinha", "outros_marinhos")
+                choiceValues = c("todos.peixes.marinhos", "atum", "biqueirao", "carapau", "cavala", "peixe.espada.preto", "sardinha", "outros.peixes.marinhos")
+            ),
+            actionButton("run_salt", "Criar gráfico"
             ),
             sliderInput("years_salt",
                 "Intervalo de anos",
@@ -94,41 +108,51 @@ ui <- fluidPage(
                 sep = "",
                 ticks = FALSE
             ),
-            actionButton("run_salt", "Criar gráfico")
         ),
+        # 3rd col
         column(7, div(style = "height:20px;"),
             plotOutput("saltPlot", width="600px", height="300px")
         )
     ),
+    # 4th row
     fluidRow(
+        # 1st col
         column(1, div(style = "height:20px;"),),
+        # 2nd col
         column(4, div(style = "height:20px;"),
             checkboxGroupInput("vars_crust",
                 "Crustáceos",
                 choiceNames = c("todos", "caranguejo", "gambas", "lagostim",  "outros"),
-                choiceValues = c("todos_crustáceos", "caranguejo", "gambas", "lagostim",  "outros_crustáceos")
-             ),
-             sliderInput("years_crust",
+                choiceValues = c("todos.crustaceos", "caranguejo", "gambas", "lagostim",  "outros.crustaceos")
+            ),
+            actionButton("run_crust", "Criar gráfico"
+            ),
+            sliderInput("years_crust",
                 "Intervalo de anos",
                 value = c(2002, 2021),
                 min = 2002,
                 max = 2021,
                 sep = "",
                 ticks = FALSE
-             ),
-             actionButton("run_crust", "Criar gráfico")
+            ),
         ),
+        # 3rd col
         column(7, div(style = "height:20px;"),
             plotOutput("crustPlot", width="600px", height="300px")
         )
     ),
+    # 5th row
     fluidRow(
+        # 1st col
         column(1, div(style = "height:20px;"),),
+        # 2nd col
         column(4, div(style = "height:20px;"),
             checkboxGroupInput("vars_moll",
                 "Moluscos",
                 choiceNames = c("todos", "berbigão", "choco", "polvo", "outros"),
-                choiceValues = c("todos_moluscos", "berbigão", "choco", "polvo", "outros_moluscos")
+                choiceValues = c("todos.moluscos", "berbigao", "choco", "polvo", "outros.moluscos")
+            ),
+            actionButton("run_moll", "Criar gráfico"
             ),
             sliderInput("years_moll",
                 "Intervalo de anos",
@@ -138,8 +162,8 @@ ui <- fluidPage(
                 sep = "",
                 ticks = FALSE
             ),
-            actionButton("run_moll", "Criar gráfico")
         ),
+        # 3rd col
         column(7, div(style = "height:20px;"),
             plotOutput("mollPlot", width="600px", height="300px")
         )
@@ -152,70 +176,81 @@ server <- function(input, output) {
     
     output$totalPlot <- renderPlot({
         ggplot(data.total, aes(ano, total)) +
-        ggtitle("Peixe total capturado em Portugal") +
-        theme(plot.title = element_text(hjust = 0.5), axis.title.y = element_text(margin=margin(r=20)), axis.title.x = element_text(margin=margin(t=10))) +
+        ggtitle("Peixe Total Capturado em Portugal") +
+        theme(plot.title = element_text(hjust = 0.5),
+              axis.title.y = element_text(margin=margin(r=20)),
+              axis.title.x = element_text(margin=margin(t=10))) +
         geom_point(col="#3D9CFFFF") +
         geom_line(col="#3D9CFFFF") +
         ylab("Toneladas") +
-        scale_y_continuous(limits=c(0, 400000), labels=c("0", "100 mil", "200 mil", "300 mil", "400 mil")) +
+        scale_y_continuous(limits=c(0, 400000),
+                           labels=c("0", "100 mil", "200 mil", "300 mil", "400 mil")) +
         xlab("Ano") +
         xlim(c(input$years_total[1], input$years_total[2]))
     })
     
     fresh_filtered <- eventReactive(input$run_fresh, {
-        filter(data.all.long, Espécie %in% input$vars_fresh)
+        filter(data.all.long, especie %in% input$vars_fresh)
     })
     output$freshPlot <- renderPlot({
-        ggplot(fresh_filtered(), aes(x=ano, y=toneladas, color=Espécie)) +
-        ggtitle("Peixe de água doce capturado em Portugal") +
+        ggplot(fresh_filtered(), aes(x=ano, y=toneladas, color=especie)) +
+        ggtitle("Peixe de Água Doce Capturado em Portugal") +
         theme(plot.title = element_text(hjust = 0.5), axis.title.y = element_text(margin=margin(r=20)), axis.title.x = element_text(margin=margin(t=10))) +
         geom_point() +
         geom_line() +
         ylab("Toneladas") +
         xlab("Ano") +
-        xlim(c(input$years_fresh[1], input$years_fresh[2]))
+        xlim(c(input$years_fresh[1], input$years_fresh[2])) +
+        scale_color_discrete(name = "Grupos",
+                             labels = c("Todos", "Enguias", "Lampreia", "Sável", "Outros"))
     })
 
     salt_filtered <- eventReactive(input$run_salt, {
-        filter(data.all.long, Espécie %in% input$vars_salt)
+        filter(data.all.long, especie %in% input$vars_salt)
     })
     output$saltPlot <- renderPlot({
-        ggplot(salt_filtered(), aes(x=ano, y=toneladas, color=Espécie)) +
-            ggtitle("Peixe marinho capturado em Portugal") +
+        ggplot(salt_filtered(), aes(x=ano, y=toneladas, color=especie)) +
+            ggtitle("Peixe Marinho Capturado em Portugal") +
             theme(plot.title = element_text(hjust = 0.5), axis.title.y = element_text(margin=margin(r=20)), axis.title.x = element_text(margin=margin(t=10))) +
             geom_point() +
             geom_line() +
             ylab("Toneladas") +
             xlab("Ano") +
-            xlim(c(input$years_salt[1], input$years_salt[2]))
+            xlim(c(input$years_salt[1], input$years_salt[2])) +
+            scale_color_discrete(name = "Grupos",
+                                 labels = c("Todos", "Atum", "Biqueirão", "Carapau", "Cavala", "Peixe espada preto", "Sardinha", "Outros"))
     })
     
     crust_filtered <- eventReactive(input$run_crust, {
-        filter(data.all.long, Espécie %in% input$vars_crust)
+        filter(data.all.long, especie %in% input$vars_crust)
     })
     output$crustPlot <- renderPlot({
-        ggplot(crust_filtered(), aes(x=ano, y=toneladas, color=Espécie)) +
-            ggtitle("Crustáceos capturados em Portugal") +
+        ggplot(crust_filtered(), aes(x=ano, y=toneladas, color=especie)) +
+            ggtitle("Crustáceos Capturados em Portugal") +
             theme(plot.title = element_text(hjust = 0.5), axis.title.y = element_text(margin=margin(r=20)), axis.title.x = element_text(margin=margin(t=10))) +
             geom_point() +
             geom_line() +
             ylab("Toneladas") +
             xlab("Ano") +
-            xlim(c(input$years_crust[1], input$years_crust[2]))
+            xlim(c(input$years_crust[1], input$years_crust[2])) +
+            scale_color_discrete(name = "Grupos",
+                                 labels = c("Todos", "Caranguejo", "Gambas", "Lagostim",  "Outros"))
     })
     
     moll_filtered <- eventReactive(input$run_moll, {
-        filter(data.all.long, Espécie %in% input$vars_moll)
+        filter(data.all.long, especie %in% input$vars_moll)
     })
     output$mollPlot <- renderPlot({
-        ggplot(moll_filtered(), aes(x=ano, y=toneladas, color=Espécie)) +
-            ggtitle("Moluscos capturados em Portugal") +
+        ggplot(moll_filtered(), aes(x=ano, y=toneladas, color=especie)) +
+            ggtitle("Molusco Capturado em Portugal") +
             theme(plot.title = element_text(hjust = 0.5), axis.title.y = element_text(margin=margin(r=20)), axis.title.x = element_text(margin=margin(t=10))) +
             geom_point() +
             geom_line() +
             ylab("Toneladas") +
             xlab("Ano") +
-            xlim(c(input$years_moll[1], input$years_moll[2]))
+            xlim(c(input$years_moll[1], input$years_moll[2])) +
+            scale_color_discrete(name = "Grupos",
+                                 labels = c("Todos", "Berbigão", "Choco", "Polvo", "Outros"))
     })
 }
 
