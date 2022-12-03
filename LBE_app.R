@@ -36,136 +36,233 @@ data.all.long$especie <- factor(data.all.long$especie,
 
 # Define UI for application
 ui <- fluidPage(
-
-    titlePanel(
-        h1("Peixe Capturado em Portugal", align = "center")
+    tags$style(
+        HTML('
+             #tittleRow {
+             height:100px;
+             }
+             
+             #panel1 {
+             align-items: center;
+             justify-content: center;
+             margin-top:280px
+             }
+             
+             #rowmargintop {
+             margin-top:25px
+             }
+             
+             #panel2 {
+             padding: 20px 40px 10px 40px;
+             }
+             
+             #centerText {
+             align-items: center;
+             justify-content: center;
+             }
+             
+             #panelsmallmarginleft {
+             margin-left:30px
+             }
+             
+             #panelsmallmargintop {
+             margin-top:30px
+             }
+             
+             ')
+    ),
+    fluidRow(id="tittleRow",
+        titlePanel(
+            h1("Peixe Capturado em Portugal",
+               align = "center")
+        ),
     ),
     # 1st row
     fluidRow(
         # 1st col
-        column(1, div(style = "height:20px;"),),
+        column(2),
         # 2nd col
-        column(4, div(style = "height:20px;"),
-            sliderInput("years_total",
-                "Intervalo de anos",
-                value = c(1969, 2021),
-                min = 1969,
-                max = 2021,
-                sep = "",
-                ticks = FALSE
+        column(2, align="center", id="panel1",
+            wellPanel(align="center",
+                sliderInput("years_total",
+                            "Intervalo de anos",
+                            value = c(1969, 2021),
+                            min = 1969,
+                            max = 2021,
+                            sep = "",
+                            ticks = FALSE
+                )
             )
         ),
         # 3rd col
-        column(7, div(style = "height:20px;"),
-            plotOutput("totalPlot", width="600px", height="300px")
+        column(8,
+            plotOutput("totalPlot",
+                       width="800px",
+                       height="400px")
         )
     ),
     # 2nd row
-    fluidRow(
+    fluidRow(id="rowmargintop",
         # 1st col
-        column(1, div(style = "height:20px;"),),
+        column(2),
         # 2nd col
-        column(4, div(style = "height:20px;"),
-            checkboxGroupInput("vars_fresh",
-                "Peixes de água doce",
-                choiceNames = c("todos", "enguias", "lampreias", "sável", "outros"),
-                choiceValues = c("todos.peixes.agua.doce","enguias", "lampreia", "savel", "outros.peixes.agua.doce")
-            ),
-            actionButton("run_fresh", "Criar gráfico"
-            ),
-            sliderInput("years_fresh",
-                "Intervalo de anos",
-                value = c(2002, 2021),
-                min = 2002,
-                max = 2021,
-                sep = "",
-                ticks = FALSE
-            ),
+        column(2,
+            wellPanel(id="panel2",
+                fluidRow(id="panelsmallmarginleft",
+                    checkboxGroupInput("vars_fresh",
+                                       "Peixes de água doce",
+                                       choiceNames = c("todos", "enguias", "lampreias", "sável", "outros"),
+                                       choiceValues = c("todos.peixes.agua.doce","enguias", "lampreia", "savel", "outros.peixes.agua.doce")
+                    )
+                ),
+                fluidRow(align="center",
+                    column(12, align="center", id="centerText",
+                        fluidRow(align="center",
+                            actionButton("run_fresh", "Gerar gráfico", 
+                            )
+                        ),
+                        fluidRow(align="center", id="panelsmallmargintop",
+                            sliderInput("years_fresh",
+                                       "Intervalo de anos",
+                                       value = c(2002, 2021),
+                                       min = 2002,
+                                       max = 2021,
+                                       sep = "",
+                                       ticks = FALSE
+                            )
+                        )
+                    )
+                )
+            )
         ),
         # 3rd col
-        column(7, div(style = "height:20px;"),
-            plotOutput("freshPlot", width="600px", height="300px")
+        column(8,
+            plotOutput("freshPlot",
+                       width="800px",
+                       height="400px")
         )
     ),
     # 3rd row
-    fluidRow(
+    fluidRow(id="rowmargintop",
         # 1st col
-        column(1, div(style = "height:20px;"),),
+        column(2),
         # 2nd col
-        column(4, div(style = "height:20px;"),
-            checkboxGroupInput("vars_salt",
-                "Peixes marinhos",
-                choiceNames = c("todos", "atum", "biqueirão", "carapau", "cavala", "peixe espada preto", "sardinha", "outros"),
-                choiceValues = c("todos.peixes.marinhos", "atum", "biqueirao", "carapau", "cavala", "peixe.espada.preto", "sardinha", "outros.peixes.marinhos")
-            ),
-            actionButton("run_salt", "Criar gráfico"
-            ),
-            sliderInput("years_salt",
-                "Intervalo de anos",
-                value = c(2002, 2021),
-                min = 2002,
-                max = 2021,
-                sep = "",
-                ticks = FALSE
-            ),
+        column(2,
+            wellPanel(id="panel2",
+                fluidRow(id="panelsmallmarginleft",
+                    checkboxGroupInput("vars_salt",
+                                       "Peixes marinhos",
+                                       choiceNames = c("todos", "atum", "biqueirão", "carapau", "cavala", "peixe espada preto", "sardinha", "outros"),
+                                       choiceValues = c("todos.peixes.marinhos", "atum", "biqueirao", "carapau", "cavala", "peixe.espada.preto", "sardinha", "outros.peixes.marinhos")
+                    )
+                ),
+                fluidRow(align="center",
+                    column(12, align="center", id="centerText",
+                        fluidRow(align="center",
+                            actionButton("run_salt", "Gerar gráfico"
+                            )
+                        ),
+                        fluidRow(align="center", id="panelsmallmargintop",
+                            sliderInput("years_salt",
+                                        "Intervalo de anos",
+                                        value = c(2002, 2021),
+                                        min = 2002,
+                                        max = 2021,
+                                        sep = "",
+                                        ticks = FALSE
+                            )
+                        )
+                    )
+                )
+            )
         ),
         # 3rd col
-        column(7, div(style = "height:20px;"),
-            plotOutput("saltPlot", width="600px", height="300px")
+        column(8,
+            plotOutput("saltPlot",
+                       width="800px",
+                       height="400px")
         )
     ),
     # 4th row
-    fluidRow(
+    fluidRow(id="rowmargintop",
         # 1st col
-        column(1, div(style = "height:20px;"),),
+        column(2),
         # 2nd col
-        column(4, div(style = "height:20px;"),
-            checkboxGroupInput("vars_crust",
-                "Crustáceos",
-                choiceNames = c("todos", "caranguejo", "gambas", "lagostim",  "outros"),
-                choiceValues = c("todos.crustaceos", "caranguejo", "gambas", "lagostim",  "outros.crustaceos")
-            ),
-            actionButton("run_crust", "Criar gráfico"
-            ),
-            sliderInput("years_crust",
-                "Intervalo de anos",
-                value = c(2002, 2021),
-                min = 2002,
-                max = 2021,
-                sep = "",
-                ticks = FALSE
-            ),
+        column(2,
+            wellPanel(id="panel2",
+                fluidRow(id="panelsmallmarginleft",
+                    checkboxGroupInput("vars_crust",
+                                       "Crustáceos",
+                                       choiceNames = c("todos", "caranguejo", "gambas", "lagostim",  "outros"),
+                                       choiceValues = c("todos.crustaceos", "caranguejo", "gambas", "lagostim",  "outros.crustaceos")
+                    )
+                ),
+                fluidRow(align="center",
+                    column(12, align="center", id="centerText",
+                        fluidRow(align="center",
+                            actionButton("run_crust", "Gerar gráfico"
+                            )
+                        ),
+                        fluidRow(align="center", id="panelsmallmargintop",
+                            sliderInput("years_crust",
+                                        "Intervalo de anos",
+                                        value = c(2002, 2021),
+                                        min = 2002,
+                                        max = 2021,
+                                        sep = "",
+                                        ticks = FALSE
+                            )
+                        )
+                    )
+                )
+            )
         ),
         # 3rd col
-        column(7, div(style = "height:20px;"),
-            plotOutput("crustPlot", width="600px", height="300px")
+        column(8,
+            plotOutput("crustPlot",
+                       width="800px",
+                       height="400px")
         )
     ),
     # 5th row
-    fluidRow(
+    fluidRow(id="rowmargintop",
         # 1st col
-        column(1, div(style = "height:20px;"),),
+        column(2),
         # 2nd col
-        column(4, div(style = "height:20px;"),
-            checkboxGroupInput("vars_moll",
-                "Moluscos",
-                choiceNames = c("todos", "berbigão", "choco", "polvo", "outros"),
-                choiceValues = c("todos.moluscos", "berbigao", "choco", "polvo", "outros.moluscos")
-            ),
-            actionButton("run_moll", "Criar gráfico"
-            ),
-            sliderInput("years_moll",
-                "Intervalo de anos",
-                value = c(2002, 2021),
-                min = 2002,
-                max = 2021,
-                sep = "",
-                ticks = FALSE
-            ),
+        column(2,
+            wellPanel(id="panel2",
+                fluidRow(id="panelsmallmarginleft",
+                    checkboxGroupInput("vars_moll",
+                                       "Moluscos",
+                                       choiceNames = c("todos", "berbigão", "choco", "polvo", "outros"),
+                                       choiceValues = c("todos.moluscos", "berbigao", "choco", "polvo", "outros.moluscos")
+                    )
+                ),
+                fluidRow(align="center",
+                    column(12, align="center", id="centerText",
+                        fluidRow(align="center",
+                            actionButton("run_moll", "Gerar gráfico"
+                            )
+                        ),
+                        fluidRow(align="center", id="panelsmallmargintop",
+                            sliderInput("years_moll",
+                                        "Intervalo de anos",
+                                        value = c(2002, 2021),
+                                        min = 2002,
+                                        max = 2021,
+                                        sep = "",
+                                        ticks = FALSE
+                            )
+                        )
+                    )
+                )
+            )
         ),
         # 3rd col
-        column(7, div(style = "height:20px;"),
-            plotOutput("mollPlot", width="600px", height="300px")
+        column(8,
+            plotOutput("mollPlot",
+                       width="800px",
+                       height="400px")
         )
     )
 )
