@@ -103,7 +103,7 @@ ggplot(dados.total, aes(ano, toneladas)) +
 
 Observando o gráfico construído, podemos verificar que existe uma grande variação do número de toneladas de peixe capturado ao longo do tempo, particularmente entre 1990 e 2000 onde se registou um decréscimo acentuado nas toneladas totais capturadas. Entre 2000 e 2006 a quantidade de pescado capturado não registou grandes variações, mas em 2007 verificou-se um aumento deste valor. Desde 2008, a tendência da captura de pescado em águas nacionais tem sido decrescente, embora se tenham registado aumentos ligeiros em 2010, 2015, 2018-2019 e 2021.  
 
-Este cenário de constante mudança das quantidade de pesca capturada poderá ser um reflexo de um esforço excessivo sobre as unidades populacionais tradicionalmente capturadas, como a sardinha, por exemplo, resultando na diminuição de recursos piscatórios. Em consequência da diminuição verificada, novas políticas que se propuzeram a proteger estes recursos foram adotadas e implementadas a nível nacional e no âmbito da Política Comum de Pescas da UE [2, 4].  
+Este cenário de constante mudança das quantidade de pesca capturada poderá ser um reflexo de um esforço excessivo sobre as unidades populacionais tradicionalmente capturadas, como a sardinha, por exemplo, resultando na diminuição de recursos piscatórios. Em consequência da diminuição verificada, novas políticas que se propuseram a proteger estes recursos foram adotadas e implementadas a nível nacional e no âmbito da Política Comum de Pescas da UE [2, 4].  
 
 **Média, desvio-padrão, máximo e mínimo do total das toneladas capturadas em Portugal**  
 
@@ -120,7 +120,7 @@ myStats <- function(var){
 myStats(dados.total$toneladas)
 ```
 
-Adicionalmente, efetuámos uma análise descritiva dos valores de pesca total capturada anualmente, a partir da qual obtivémos uma média de 221 394 toneladas capturadas, com um desvio-padrão de 77 941 toneladas. Além disso, verificámos que o valor máximo de 375 413 toneladas foi atingidigo no ano de 1973, enquanto que o valor mínimo de 110 454 toneladas foi obervado em 2020.
+Adicionalmente, efetuámos uma análise descritiva dos valores de pesca total capturada anualmente, a partir da qual obtivemos uma média de 221 394 toneladas capturadas, com um desvio-padrão de 77 941 toneladas. Além disso, verificámos que o valor máximo de 375 413 toneladas foi atingido no ano de 1973, enquanto o valor mínimo de 110 454 toneladas foi observado em 2020.
 
 ### Análise dos diferentes grupos de animais capturados em Portugal  
 
@@ -180,7 +180,7 @@ Para averiguar se os valores médios, em toneladas, de peixes de água doce capt
 1) P-values dos testes à normalidade (Shapiro-Wilk)  
 
 ```{r, echo=FALSE}
-c(lampreia=shapiro.test(dados.all$lampreia)$p.value, sável=shapiro.test(dados.all$savel)$p.value, enguias=shapiro.test(dados.all$enguias)$p.value, outros=shapiro.test(dados.all$outros.peixes.agua.doce)$p.value)
+c(lampreia=shapiro.test(dados.all$lampreia)$p.value, savel=shapiro.test(dados.all$savel)$p.value, enguias=shapiro.test(dados.all$enguias)$p.value, outros=shapiro.test(dados.all$outros.peixes.agua.doce)$p.value)
 ```
 
 Ao testar a normalidade dos dados, verificámos que apenas a lampreia possui aproximação à distribuição normal (não rejeição de $H_0$), levando assim à exclusão da possibilidade de usar um teste paramétrico para a comparação dos valores médios. Em alternativa, recorremos aos testes não paramétricos de Kruskal-Wallis e de Dunn para efetuar esse estudo.  
@@ -224,10 +224,10 @@ Para averiguar se os valores médios, em toneladas, de peixe marinho capturado a
 1) P-values dos testes à normalidade (Shapiro-Wilk)  
 
 ```{r, echo=FALSE}
-c(atum=shapiro.test(dados.all$atum)$p.value, biqueirão=shapiro.test(dados.all$biqueirao)$p.value, carapau=shapiro.test(dados.all$carapau)$p.value, cavala=shapiro.test(dados.all$cavala)$p.value, peixe.espada.preto=shapiro.test(dados.all$peixe.espada.preto)$p.value, sardinha=shapiro.test(dados.all$sardinha)$p.value, outros=shapiro.test(dados.all$outros.peixes.marinhos)$p.value)
+c(atum=shapiro.test(dados.all$atum)$p.value, biqueirao=shapiro.test(dados.all$biqueirao)$p.value, carapau=shapiro.test(dados.all$carapau)$p.value, cavala=shapiro.test(dados.all$cavala)$p.value, peixe.espada.preto=shapiro.test(dados.all$peixe.espada.preto)$p.value, sardinha=shapiro.test(dados.all$sardinha)$p.value, outros=shapiro.test(dados.all$outros.peixes.marinhos)$p.value)
 ```
 
-Após testar a normalidade dos dados, concluímos que o biqueirão, o peixe espada preto e a sardinha não possuem aproximação à distribuição normal (rejeição de $H_0$), excluindo assim a possibilidade de usar um teste paramétrico. Como tal, recorremos aos testes não paramétricos de Kruskal-Wallis e de Dunn.  
+Após testar a normalidade dos dados, concluímos que o biqueirão, o peixe-espada preto e a sardinha não possuem aproximação à distribuição normal (rejeição de $H_0$), excluindo assim a possibilidade de usar um teste paramétrico. Como tal, recorremos aos testes não paramétricos de Kruskal-Wallis e de Dunn.  
 
 2) Resultados dos testes de Kruskal-Wallis e de Dunn  
 
@@ -259,7 +259,7 @@ ggplot(crustaceos, aes(ano, toneladas, color=especie)) +
                        labels = c("Caranguejo", "Gambas", "Lagostim",  "Outros"))
 ```
 
-Observando o gráfico correspondente às alterações na quantidade, em toneladas, de custáceos capturados ao longo dos anos em Portugal, podemos concluir que as gambas possuem uma grande variação de valores em relação às restantes espécies.  
+Observando o gráfico correspondente às alterações na quantidade, em toneladas, de crustáceos capturados ao longo dos anos em Portugal, podemos concluir que as gambas possuem uma grande variação de valores em relação às restantes espécies.  
 
 **Testes de hipóteses**  
 
@@ -335,8 +335,7 @@ Dado que rejeitamos $H_0$ no teste de Kruskal-Wallis, verificamos que existe, pe
 
 ### Desenvolvimento da ShinyApp  
 
-De maneira a implementar na ShinyApp os diversos gráficos construídos ao longo deste relatório, recorremos à utilização de diferentes funções para permitir a sua visualização interativa com base num intervalo de anos selecionado pelo utilizador. A seleção deste intervalo pelo utilizador foi conseguida através da criação de um slider com a função `sliderInput`, definindo assim um vetor com os limites mínimo e máximo do eixo do x dos gráficos a serem produzidos. Posteriormente, a formataç
-ao e construção desses gráficos foi realizada com recurso às funções `plotOutput` e `renderPlot`.  
+De maneira a implementar na ShinyApp os diversos gráficos construídos ao longo deste relatório, recorremos à utilização de diferentes funções para permitir a sua visualização interativa com base num intervalo de anos selecionado pelo utilizador. A seleção deste intervalo pelo utilizador foi conseguida através da criação de um slider com a função `sliderInput`, definindo assim um vetor com os limites mínimo e máximo do eixo do x dos gráficos a serem produzidos. Posteriormente, a formatação e construção desses gráficos foi realizada com recurso às funções `plotOutput` e `renderPlot`.  
 
 Em particular para os gráficos relativos às diferentes espécies estudadas neste conjunto de dados, foi necessário criar um input das diferentes opções de espécies para cada tipo de animais que o utilizador pode escolher através da função `eventReactive`. Esta filtração de dados foi armazenada numa variável para posterior utilização na construção dos gráficos. Por fim, aplicámos a função `actionButton` para gerar um botão interativo que, quando selecionado, resulta na criação de uma representação gráfica dos dados selecionados.
 
@@ -351,7 +350,7 @@ knitr::include_graphics("app3.png")
 
 ### Discussão de resultados e conclusão
 
-Muitos dos stocks de pesca capturada em Portugal têm diminuido ao longo da última década para valores abaixo dos limites biológicos de segurança das diferentes espécies. Uma das principais razões para este declínio é a sobreexploração destes recursos resultante de volumes de captura superiores à capacidade de reprodução das populações [5]. Como tal, a implementação de restrições à captura de determinadas espécies e a redução das respetivas quotas são medidas extremamente importantes para assegurar a sustentabilidade das mesmas, sendo estas alterações refletidas na evolução anual das toneladas de peixe (marinho e de água doce), crustáceos e moluscos que são capturadas em Portugal.
+Muitos dos stocks de pesca capturada em Portugal têm diminuído ao longo da última década para valores abaixo dos limites biológicos de segurança das diferentes espécies. Uma das principais razões para este declínio é a sobreexploração destes recursos resultante de volumes de captura superiores à capacidade de reprodução das populações [5]. Como tal, a implementação de restrições à captura de determinadas espécies e a redução das respetivas quotas são medidas extremamente importantes para assegurar a sustentabilidade das mesmas, sendo estas alterações refletidas na evolução anual das toneladas de peixe (marinho e de água doce), crustáceos e moluscos que são capturadas em Portugal.
 
 Através deste trabalho, tivemos oportunidade de explorar diversos métodos de análise estatística para estudar a evolução anual da pesca capturada em Portugal. Além disso, ficámos a conhecer as bases fundamentais para o desenvolvimento de uma ShinyApp, nomeadamente no que toca à interação entre os dados representados e o utilizador. 
 
