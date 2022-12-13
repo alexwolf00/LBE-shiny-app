@@ -11,27 +11,27 @@ data <- data[3:55, ]
 data[1:53, ] <- apply(data[1:53, ], 2, function(x)(gsub("\\.", "", x, perl=TRUE)))
 data[1:53, ] <- apply(data[1:53, ], 2, function(x)(gsub("x", NA, x, perl=TRUE)))
 data[, 1:21] <- apply(data, 2, as.numeric)
-colnames(data) <- c("ano", "total", "todos.peixes.agua.doce", "lampreia", "savel", "enguias",
-                    "todos.peixes.marinhos", "atum", "biqueirao", "carapau", "cavala", "peixe.espada.preto", "sardinha",
-                    "todos.crustaceos", "gambas", "lagostim", "caranguejo",
-                    "todos.moluscos", "berbigao", "choco", "polvo")
+colnames(data) <- c("ano", "total", "Todos.peixes.de.água.doce", "Lampreia", "Sável", "Enguias",
+                    "Todos.peixes.marinhos", "Atum", "Biqueirão", "Carapau", "Cavala", "Peixe.espada.preto", "Sardinha",
+                    "Todos.crustáceos", "Gambas", "Lagostim", "Caranguejo",
+                    "Todos.moluscos", "Berbigão", "Choco", "Polvo")
 
 data.total <- data[1:53, 1:2]
 
 data.all <- data[34:53, -2]
-data.all$outros.peixes.agua.doce <- apply(data.all, 1, function(table)(table["todos.peixes.agua.doce"] - table["lampreia"] - table["savel"] - table["enguias"]))
-data.all$outros.peixes.marinhos <- apply(data.all, 1, function(table)(table["todos.peixes.marinhos"] - table["atum"] - table["biqueirao"] - table["carapau"] - table["cavala"] - table["peixe.espada.preto"] - table["sardinha"]))
-data.all$outros.crustaceos <- apply(data.all, 1, function(table)(table["todos.crustaceos"] - table["gambas"] - table["lagostim"] - table["caranguejo"]))
-data.all$outros.moluscos <- apply(data.all, 1, function(table)(table["todos.moluscos"] - table["berbigao"] - table["choco"] - table["polvo"]))
+data.all$Outros.peixes.de.água.doce <- apply(data.all, 1, function(table)(table["Todos.peixes.de.água.doce"] - table["Lampreia"] - table["Sável"] - table["Enguias"]))
+data.all$Outros.peixes.marinhos <- apply(data.all, 1, function(table)(table["Todos.peixes.marinhos"] - table["Atum"] - table["Biqueirão"] - table["Carapau"] - table["Cavala"] - table["Peixe.espada.preto"] - table["Sardinha"]))
+data.all$Outros.crustáceos <- apply(data.all, 1, function(table)(table["Todos.crustáceos"] - table["Gambas"] - table["Lagostim"] - table["Caranguejo"]))
+data.all$Outros.moluscos <- apply(data.all, 1, function(table)(table["Todos.moluscos"] - table["Berbigão"] - table["Choco"] - table["Polvo"]))
 
 data.all.long <- data.all %>%
   pivot_longer(cols=-ano, names_to="especie", values_to="toneladas")
 
 data.all.long$especie <- factor(data.all.long$especie,
-                                levels=c("todos.peixes.agua.doce", "enguias", "lampreia", "savel", "outros.peixes.agua.doce",
-                                         "todos.peixes.marinhos", "atum", "biqueirao", "carapau", "cavala", "peixe.espada.preto", "sardinha", "outros.peixes.marinhos",
-                                         "todos.crustaceos", "caranguejo", "gambas", "lagostim",  "outros.crustaceos",
-                                         "todos.moluscos", "berbigao", "choco", "polvo", "outros.moluscos"))
+                                levels=c("Todos.peixes.de.água.doce", "Enguias", "Lampreia", "Sável", "Outros.peixes.de.água.doce",
+                                         "Todos.peixes.marinhos", "Atum", "Biqueirão", "Carapau", "Cavala", "Peixe.espada.preto", "Sardinha", "Outros.peixes.marinhos",
+                                         "Todos.crustáceos", "Caranguejo", "Gambas", "Lagostim",  "Outros.crustáceos",
+                                         "Todos.moluscos", "Berbigão", "Choco", "Polvo", "Outros.moluscos"))
 
 
 # Define UI for application
@@ -111,8 +111,8 @@ ui <- fluidPage(
                 fluidRow(id="panelsmallmarginleft",
                     checkboxGroupInput("vars_fresh",
                                        "Peixes de água doce",
-                                       choiceNames = c("todos", "enguias", "lampreias", "sável", "outros"),
-                                       choiceValues = c("todos.peixes.agua.doce","enguias", "lampreia", "savel", "outros.peixes.agua.doce")
+                                       choiceNames = c("Todos", "Enguias", "Lampreias", "Sável", "Outros"),
+                                       choiceValues = c("Todos.peixes.de.água.doce","Enguias", "Lampreia", "Sável", "Outros.peixes.de.água.doce")
                     )
                 ),
                 fluidRow(align="center",
@@ -152,8 +152,8 @@ ui <- fluidPage(
                 fluidRow(id="panelsmallmarginleft",
                     checkboxGroupInput("vars_salt",
                                        "Peixes marinhos",
-                                       choiceNames = c("todos", "atum", "biqueirão", "carapau", "cavala", "peixe espada preto", "sardinha", "outros"),
-                                       choiceValues = c("todos.peixes.marinhos", "atum", "biqueirao", "carapau", "cavala", "peixe.espada.preto", "sardinha", "outros.peixes.marinhos")
+                                       choiceNames = c("Todos", "Atum", "Biqueirão", "Carapau", "Cavala", "Peixe espada preto", "Sardinha", "Outros"),
+                                       choiceValues = c("Todos.peixes.marinhos", "Atum", "Biqueirão", "Carapau", "Cavala", "Peixe.espada.preto", "Sardinha", "Outros.peixes.marinhos")
                     )
                 ),
                 fluidRow(align="center",
@@ -193,8 +193,8 @@ ui <- fluidPage(
                 fluidRow(id="panelsmallmarginleft",
                     checkboxGroupInput("vars_crust",
                                        "Crustáceos",
-                                       choiceNames = c("todos", "caranguejo", "gambas", "lagostim",  "outros"),
-                                       choiceValues = c("todos.crustaceos", "caranguejo", "gambas", "lagostim",  "outros.crustaceos")
+                                       choiceNames = c("Todos", "Caranguejo", "Gambas", "Lagostim",  "Outros"),
+                                       choiceValues = c("Todos.crustáceos", "Caranguejo", "Gambas", "Lagostim",  "Outros.crustáceos")
                     )
                 ),
                 fluidRow(align="center",
@@ -234,8 +234,8 @@ ui <- fluidPage(
                 fluidRow(id="panelsmallmarginleft",
                     checkboxGroupInput("vars_moll",
                                        "Moluscos",
-                                       choiceNames = c("todos", "berbigão", "choco", "polvo", "outros"),
-                                       choiceValues = c("todos.moluscos", "berbigao", "choco", "polvo", "outros.moluscos")
+                                       choiceNames = c("Todos", "Berbigão", "Choco", "Polvo", "Outros"),
+                                       choiceValues = c("Todos.moluscos", "Berbigão", "Choco", "Polvo", "Outros.moluscos")
                     )
                 ),
                 fluidRow(align="center",
@@ -298,8 +298,7 @@ server <- function(input, output) {
         ylab("Toneladas") +
         xlab("Ano") +
         xlim(c(input$years_fresh[1], input$years_fresh[2])) +
-        scale_color_discrete(name = "Grupos",
-                             labels = c("Todos", "Enguias", "Lampreia", "Sável", "Outros"))
+        scale_color_discrete(name = "Grupos")
     })
 
     salt_filtered <- eventReactive(input$run_salt, {
@@ -314,8 +313,7 @@ server <- function(input, output) {
             ylab("Toneladas") +
             xlab("Ano") +
             xlim(c(input$years_salt[1], input$years_salt[2])) +
-            scale_color_discrete(name = "Grupos",
-                                 labels = c("Todos", "Atum", "Biqueirão", "Carapau", "Cavala", "Peixe espada preto", "Sardinha", "Outros"))
+            scale_color_discrete(name = "Grupos")
     })
     
     crust_filtered <- eventReactive(input$run_crust, {
@@ -330,8 +328,7 @@ server <- function(input, output) {
             ylab("Toneladas") +
             xlab("Ano") +
             xlim(c(input$years_crust[1], input$years_crust[2])) +
-            scale_color_discrete(name = "Grupos",
-                                 labels = c("Todos", "Caranguejo", "Gambas", "Lagostim",  "Outros"))
+            scale_color_discrete(name = "Grupos")
     })
     
     moll_filtered <- eventReactive(input$run_moll, {
@@ -346,8 +343,7 @@ server <- function(input, output) {
             ylab("Toneladas") +
             xlab("Ano") +
             xlim(c(input$years_moll[1], input$years_moll[2])) +
-            scale_color_discrete(name = "Grupos",
-                                 labels = c("Todos", "Berbigão", "Choco", "Polvo", "Outros"))
+            scale_color_discrete(name = "Grupos")
     })
 }
 
