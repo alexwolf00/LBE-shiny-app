@@ -36,7 +36,7 @@ pre {
 
 *****
 ```{r, echo=FALSE, out.width="25%", fig.align='center'}
-knitr::include_graphics("C:/Users/mafal/Downloads/logo.png")
+# knitr::include_graphics("C:/Users/mafal/Downloads/logo.png")
 ```
 
 ### Resumo  
@@ -45,15 +45,15 @@ O presente relatório baseia-se na análise de dados de captura, em toneladas, d
 
 ### Introdução  
 
-A pesca é um recurso natural, renovável e móvel que faz parte do património do nosso país. Estes recursos são condicionados e respondem a mudanças provocadas pelas alterações do clima, da geologia, da geomorfologia, e ainda pela poluição, pesca excessiva e outros impactos humanos. Deste modo, a pesca está intimamente dependente das interações entre o ser humano e a natureza [1,2]. 
+A pesca é um recurso natural, renovável e móvel que faz parte do património do nosso país. Estes recursos são condicionados e respondem a mudanças provocadas pelas alterações do clima, da geologia, da geomorfologia, e ainda pela poluição, pesca excessiva e outros impactos humanos. Deste modo, a pesca está intimamente dependente das interações entre o ser humano e a natureza [1, 2].  
 
-Face às alterações sofridas na pesca em Portugal resultantes de fatores naturais e humanos, a avaliação da sustentabilidade ou delapidação dos recursos piscatórios tem vindo a tornar-se uma preocupação cada vez mais prevalente na sociedade. Com o objetivo de promover uma pesca sustentável, a Política Comum das Pescas (PCP) foi desenvolvida para reger as pescas através de regulamentos adotadas a nível da União Europeia (UE) e aplicados em todos os Estados-Membros, tendo sofrido diversas modificações ao longo dos anos para responder às alterações observadas nos recursos piscatórios e continuar a assegurar a conservação dos mesmos [1,2]. 
+Face às alterações sofridas na pesca em Portugal resultantes de fatores naturais e humanos, a avaliação da sustentabilidade ou delapidação dos recursos piscatórios tem vindo a tornar-se uma preocupação cada vez mais prevalente na sociedade. Com o objetivo de promover uma pesca sustentável, a Política Comum das Pescas (PCP) foi desenvolvida para reger as pescas através de regulamentos adotadas a nível da União Europeia (UE) e aplicados em todos os Estados-Membros, tendo sofrido diversas modificações ao longo dos anos para responder às alterações observadas nos recursos piscatórios e continuar a assegurar a conservação dos mesmos [1, 2].  
 
 De forma a monitorizar o efeito destas alterações na evolução da pesca ao longo dos anos, dados relativos às toneladas pescadas em Portugal têm sido recolhidos pelo Instituto Nacional de Estatística (INE) e pela Direção-Geral de Recursos Naturais, Segurança e Serviços Marítimos (DGRM) desde 1969 até aos dias de hoje [3], encontrando-se atualmente armazenados e disponíveis para consulta na Pordata. Nesse contexto, este trabalho foi desenvolvido com o propósito de não só estudar a evolução das quantidades de pesca capturadas em Portugal utilizando diversos métodos de análise estatística, como também criar uma ShinyApp para a visualização gráfica interativa destes dados.  
 
-### Análise da captura total anual dos diferentes tipos de animais
+### Análise da captura total anual dos diferentes grupos de animais  
 
-**Importação e processamento inicial dos dados** 
+**Importação e processamento inicial dos dados**  
 
 Para a realização deste estudo, começámos por importar os dados da Pordata e alterámos o nome das colunas.  
 
@@ -80,33 +80,30 @@ scroll_box(height = "200px", # mostrar os dados numa scroll box
            fixed_thead = list(enabled=TRUE, background="lightgrey"))
 ```
 <br> </pt>
-**Gráfico de evolução da pesca total ao longo do tempo**
+**Gráfico de evolução da pesca total ao longo do tempo**  
 
-Com vista a estudar as variações de captura total ocorridas entre 1969 e 2021, os respetivos dados foram organizados na tabela `dados.total` para facilitar esta análise. De seguida, representámos graficamente a evolução anual observada: 
+Com vista a estudar as variações de captura total ocorridas entre 1969 e 2021, os respetivos dados foram organizados na tabela `dados.total` para facilitar esta análise. De seguida, representámos graficamente a evolução anual observada:  
 
-```{r, echo=FALSE, fig.width=8, fig.height=3}
-
+```{r, echo=FALSE, fig.width=7, fig.height=3}
 dados.total <- dados[1:53, 1:2]
 colnames(dados.total) <- c("ano", "toneladas")
-
-blue="#3D9CFFFF"
 
 ggplot(dados.total, aes(ano, toneladas)) +
   ggtitle("Pesca Capturada em Portugal") +
   theme(plot.title = element_text(hjust = 0.5),
         axis.title.y = element_text(margin=margin(r=20)),
         axis.title.x = element_text(margin=margin(t=10))) +
-  geom_line(col=blue) + 
-  geom_point(col=blue) + 
+  geom_line(col="#3D9CFFFF") + 
+  geom_point(col="#3D9CFFFF") + 
+  xlab("Ano") +
   ylab("Toneladas") +
   scale_y_continuous(limits=c(0, 400000),
-                     labels=c("0", "100 mil", "200 mil", "300 mil", "400 mil")) +
-  xlab("Ano")
+                     labels=c("0", "100 mil", "200 mil", "300 mil", "400 mil"))
 ```
 
-Observando o gráfico construído, podemos verificar que existe uma grande variação do número de toneladas de peixe capturado ao longo do tempo, particularmente entre 1990 e 2000 onde se registou um decréscimo acentuado nas toneladas totais capturadas. Entre 2000 e 2006 a quantidade de pescado capturado não registou grandes variações, mas em 2007 verificou-se um aumento deste valor. Desde 2008, a tendência da captura de pescado em águas nacionais tem sido decrescente, embora se tenham registado aumentos ligeiros em 2010, 2015, 2018-2019 e 2021.
+Observando o gráfico construído, podemos verificar que existe uma grande variação do número de toneladas de peixe capturado ao longo do tempo, particularmente entre 1990 e 2000 onde se registou um decréscimo acentuado nas toneladas totais capturadas. Entre 2000 e 2006 a quantidade de pescado capturado não registou grandes variações, mas em 2007 verificou-se um aumento deste valor. Desde 2008, a tendência da captura de pescado em águas nacionais tem sido decrescente, embora se tenham registado aumentos ligeiros em 2010, 2015, 2018-2019 e 2021.  
 
-Este cenário de constante mudança das quantidade de pesca capturada poderá ser um reflexo de um esforço excessivo sobre as unidades populacionais tradicionalmente capturadas, como a sardinha, por exemplo, resultando na diminuição de recursos piscatórios. Em consequência da diminuição verificada, novas políticas que se propuzeram a proteger estes recursos foram adotadas e implementadas a nível nacional e no âmbito da Política Comum de Pescas da UE [2,4].
+Este cenário de constante mudança das quantidade de pesca capturada poderá ser um reflexo de um esforço excessivo sobre as unidades populacionais tradicionalmente capturadas, como a sardinha, por exemplo, resultando na diminuição de recursos piscatórios. Em consequência da diminuição verificada, novas políticas que se propuzeram a proteger estes recursos foram adotadas e implementadas a nível nacional e no âmbito da Política Comum de Pescas da UE [2, 4].  
 
 **Média, desvio-padrão, máximo e mínimo do total das toneladas capturadas em Portugal**  
 
@@ -119,15 +116,13 @@ myStats <- function(var){
                 full_width = FALSE,
                 font_size=14)
 }
-```
 
-```{r, echo=FALSE}
 myStats(dados.total$toneladas)
 ```
 
 Adicionalmente, efetuámos uma análise descritiva dos valores de pesca total capturada anualmente, a partir da qual obtivémos uma média de 221 394 toneladas capturadas, com um desvio-padrão de 77 941 toneladas. Além disso, verificámos que o valor máximo de 375 413 toneladas foi atingidigo no ano de 1973, enquanto que o valor mínimo de 110 454 toneladas foi obervado em 2020.
 
-### Análise dos diferentes tipos de animais capturados em Portugal  
+### Análise dos diferentes grupos de animais capturados em Portugal  
 
 Contrariamente ao valor total de toneladas capturadas, apenas foram registados dados para as diferentes espécies a partir de 2002, razão pela qual iremos fazer a nossa análise para cada espécie somente a partir deste ano.  
 
@@ -135,16 +130,18 @@ Ao somar os valores de todas as espécies dentro de cada categoria de animais, v
 
 ```{r, echo=FALSE}
 dados.all <- dados[34:53, ]
+
 dados.all$outros.peixes.agua.doce <- apply(dados.all, 1, function(table)(table["todos.peixes.agua.doce"] - table["lampreia"] - table["savel"] - table["enguias"]))
 dados.all$outros.peixes.marinhos <- apply(dados.all, 1, function(table)(table["todos.peixes.marinhos"] - table["atum"] - table["biqueirao"] - table["carapau"] - table["cavala"] - table["peixe.espada.preto"] - table["sardinha"]))
 dados.all$outros.crustaceos <- apply(dados.all, 1, function(table)(table["todos.crustaceos"] - table["gambas"] - table["lagostim"] - table["caranguejo"]))
 dados.all$outros.moluscos <- apply(dados.all, 1, function(table)(table["todos.moluscos"] - table["berbigao"] - table["choco"] - table["polvo"]))
 ```
 
-Adicionalmente, transformámos o data frame `dados.all` no formato longo para permitir a criação de gráficos que consideram cada espécie.
+Adicionalmente, transformámos o data frame `dados.all` no formato longo para permitir a criação de gráficos que consideram cada espécie.  
 
 ```{r, echo=FALSE}
 dados.all.long <- dados.all %>% pivot_longer(cols=-ano, names_to="especie", values_to="toneladas")
+
 dados.all.long$especie <- factor(dados.all.long$especie,
                                 levels=c("total", "todos.peixes.agua.doce", "enguias", "lampreia", "savel", "outros.peixes.agua.doce",
                                          "todos.peixes.marinhos", "atum", "biqueirao", "carapau", "cavala", "peixe.espada.preto", "sardinha", "outros.peixes.marinhos",
@@ -152,162 +149,204 @@ dados.all.long$especie <- factor(dados.all.long$especie,
                                          "todos.moluscos", "berbigao", "choco", "polvo", "outros.moluscos"))
 ```
 
-#### Peixes de água doce
+#### Peixes de água doce  
 
-**Gráfico de evolução da pesca de peixe de água doce ao longo do tempo**
+**Gráfico de evolução da pesca de peixe de água doce ao longo do tempo**  
 
 ```{r, echo=FALSE, fig.width=6, fig.height=3}
 agua.doce <- filter(dados.all.long, especie %in% c("enguias", "lampreia", "savel", "outros.peixes.agua.doce"))
 
-ggplot(agua.doce, aes(ano, toneladas, color=especie)) + ggtitle("Peixe de Água Doce Capturado em Portugal") +
-theme(plot.title = element_text(hjust = 0.5), axis.title.y = element_text(margin=margin(r=20)), axis.title.x = element_text(margin=margin(t=10))) +
-geom_point() + geom_line() + ylab("Toneladas") + xlab("Ano") +
-scale_fill_discrete(name = "Espécies", labels = c("Enguias", "Lampreia", "Sável", "Outros")) +
-scale_color_discrete(name = "Espécies", labels = c("Enguias", "Lampreia", "Sável", "Outros"))
+ggplot(agua.doce, aes(ano, toneladas, color=especie)) +
+  ggtitle("Peixe de Água Doce Capturado em Portugal") +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.y = element_text(margin=margin(r=20)),
+        axis.title.x = element_text(margin=margin(t=10))) +
+  geom_point() +
+  geom_line() +
+  ylab("Toneladas") +
+  xlab("Ano") +
+  scale_fill_discrete(name = "Espécies",
+                      labels = c("Enguias", "Lampreia", "Sável", "Outros")) +
+  scale_color_discrete(name = "Espécies",
+                       labels = c("Enguias", "Lampreia", "Sável", "Outros"))
 ```
 
 Observando o gráfico correspondente às alterações na quantidade, em toneladas, de peixe de àgua doce capturado ao longo dos anos em Portugal, podemos concluir que a lampreia e o sável possuem uma grande variação de valores em relação às restantes espécies.  
 
-**Testes de hipóteses**
+**Testes de hipóteses**  
 
-Para averiguar se os valores médios, em toneladas, de peixes de água doce capturados em Portugal ao longo do tempo eram diferentes de espécie para espécie, começámos por investigar se era possível utilizar um teste paramétrico (ANOVA) para essa análise.  
+Para averiguar se os valores médios, em toneladas, de peixes de água doce capturados em Portugal ao longo do tempo são diferentes de espécie para espécie, começámos por determinar se era possível utilizar um teste paramétrico (ANOVA) para essa análise ao testar os seus pressupostos.  
 
-1) Normalidade
+1) P-values dos testes à normalidade (Shapiro-Wilk)  
+
 ```{r, echo=FALSE}
-ad.shapiro <- c(lampreia=shapiro.test(dados.all$lampreia)$p.value, savel=shapiro.test(dados.all$savel)$p.value, enguias=shapiro.test(dados.all$enguias)$p.value, outros=shapiro.test(dados.all$outros.peixes.agua.doce)$p.value); ad.shapiro
+c(lampreia=shapiro.test(dados.all$lampreia)$p.value, sável=shapiro.test(dados.all$savel)$p.value, enguias=shapiro.test(dados.all$enguias)$p.value, outros=shapiro.test(dados.all$outros.peixes.agua.doce)$p.value)
 ```
 
-Ao testar a normalidade dos dados, verificámos que apenas a lampreia possui aproximação à distribuição normal (não rejeição de $H_0$), levando assim à exclusão da possibilidade de usar um teste paramétrico para a comparação dos valores médios. Em alternativa, recorremos aos testes não paramétricos de Kruskal-Wallis e de Dunn para efetuar esse estudo.\
+Ao testar a normalidade dos dados, verificámos que apenas a lampreia possui aproximação à distribuição normal (não rejeição de $H_0$), levando assim à exclusão da possibilidade de usar um teste paramétrico para a comparação dos valores médios. Em alternativa, recorremos aos testes não paramétricos de Kruskal-Wallis e de Dunn para efetuar esse estudo.  
 
-2) Kruskal-Wallis e Teste de Dunn
+2) Resultados dos testes de Kruskal-Wallis e de Dunn  
+
 ```{r, echo=FALSE}
 dunn.test(c(dados.all$lampreia, dados.all$savel, dados.all$enguias, dados.all$outros.peixes.agua.doce), rep(c("Lampreia", "Sável", "Enguias", "Outros"), each=20))
 ```
 
-Uma vez que, pelo teste de Kruskal-Wallis, verificámos que existe, pelo menos, uma população diferente das restantes (rejeição de $H_0$), aplicámos o teste de Dunn para concluir que os pares "lampreia + enguias", "outras espécies de peixe de água doce + lampreia", "sável + enguias" e "sável + outras espécies de peixe de água doce" apresentam valores médios diferentes entre si (rejeição de $H_0$).\
+Uma vez que, pelo teste de Kruskal-Wallis, verificámos que existe, pelo menos, uma população diferente das restantes (rejeição de $H_0$), aplicámos o teste de Dunn para concluir que os pares "lampreia + enguias", "outras espécies de peixe de água doce + lampreia", "sável + enguias" e "sável + outras espécies de peixe de água doce" apresentam valores médios diferentes entre si (rejeição de $H_0$).  
 
-#### Peixes Marinhos
+#### Peixes Marinhos  
 
-**Gráfico de evolução da pesca de peixe marinho ao longo do tempo**
+**Gráfico de evolução da pesca de peixe marinho ao longo do tempo**  
 
 ```{r, echo=FALSE, fig.width=6, fig.height=3}
 marinhos <- filter(dados.all.long, especie %in% c("atum", "biqueirao", "carapau", "cavala", "peixe.espada.preto", "sardinha", "outros.peixes.marinhos"))
 
-ggplot(marinhos, aes(ano, toneladas, color=especie)) + ggtitle("Peixe Marinho Capturado em Portugal") +
-theme(plot.title = element_text(hjust = 0.5), axis.title.y = element_text(margin=margin(r=20)), axis.title.x = element_text(margin=margin(t=10))) +
-geom_point() + geom_line() + ylab("Toneladas") + xlab("Ano") + 
-scale_fill_discrete(name = "Espécies", labels = c("Atum", "Biqueirão", "Carapau", "Cavala", "Peixe espada preto", "Sardinha", "Outros")) +
-scale_color_discrete(name = "Espécies", labels = c("Atum", "Biqueirão", "Carapau", "Cavala", "Peixe espada preto", "Sardinha", "Outros"))
+ggplot(marinhos, aes(ano, toneladas, color=especie)) +
+  ggtitle("Peixe Marinho Capturado em Portugal") +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.y = element_text(margin=margin(r=20)),
+        axis.title.x = element_text(margin=margin(t=10))) +
+  geom_point() +
+  geom_line() +
+  ylab("Toneladas") +
+  xlab("Ano") + 
+  scale_fill_discrete(name = "Espécies",
+                      labels = c("Atum", "Biqueirão", "Carapau", "Cavala", "Peixe espada preto", "Sardinha", "Outros")) +
+  scale_color_discrete(name = "Espécies",
+                       labels = c("Atum", "Biqueirão", "Carapau", "Cavala", "Peixe espada preto", "Sardinha", "Outros"))
 ```
 
-Observando o gráfico correspondente às alterações na quantidade, em toneladas, de peixe marinho capturado ao longo dos anos em Portugal, podemos verificar que existe uma grande variação de valores para a sardinha e a cavala, contrastando com a mínima oscilação do número de toneladas capturadas registado para o peixe espada preto.\
+Observando o gráfico correspondente às alterações na quantidade, em toneladas, de peixe marinho capturado ao longo dos anos em Portugal, podemos verificar que existe uma grande variação de valores para a sardinha e a cavala, contrastando com a mínima oscilação do número de toneladas capturadas registado para o peixe espada preto.  
 
-**Testes de hipóteses**
+**Testes de hipóteses**  
 
-Para averiguar se os valores médios, em toneladas, de peixe marinho capturado ao longo do tempo eram diferentes de espécie para espécie, começámos por investigar se era possível utilizar um teste paramétrico (ANOVA) para essa análise.\
+Para averiguar se os valores médios, em toneladas, de peixe marinho capturado ao longo do tempo eram diferentes de espécie para espécie, começámos por determinar se era possível utilizar um teste paramétrico (ANOVA) para essa análise ao testar os seus pressupostos.  
 
-1) Normalidade
+1) P-values dos testes à normalidade (Shapiro-Wilk)  
+
 ```{r, echo=FALSE}
-mar.shapiro <- c(atum=shapiro.test(dados.all$atum)$p.value, biqueirao=shapiro.test(dados.all$biqueirao)$p.value, carapau=shapiro.test(dados.all$carapau)$p.value, cavala=shapiro.test(dados.all$cavala)$p.value, p.espada=shapiro.test(dados.all$peixe.espada.preto)$p.value, sardinha=shapiro.test(dados.all$sardinha)$p.value, outros=shapiro.test(dados.all$outros.peixes.marinhos)$p.value); mar.shapiro
+c(atum=shapiro.test(dados.all$atum)$p.value, biqueirão=shapiro.test(dados.all$biqueirao)$p.value, carapau=shapiro.test(dados.all$carapau)$p.value, cavala=shapiro.test(dados.all$cavala)$p.value, peixe.espada.preto=shapiro.test(dados.all$peixe.espada.preto)$p.value, sardinha=shapiro.test(dados.all$sardinha)$p.value, outros=shapiro.test(dados.all$outros.peixes.marinhos)$p.value)
 ```
 
-Após testar a normalidade dos dados, concluímos que o biqueirão, o peixe espada preto e a sardinha não possuem aproximação à distribuição normal (rejeição de $H_0$), excluindo assim a possibilidade de usar um teste paramétrico. Como tal, recorremos aos testes não paramétricos de Kruskal-Wallis e de Dunn.\
+Após testar a normalidade dos dados, concluímos que o biqueirão, o peixe espada preto e a sardinha não possuem aproximação à distribuição normal (rejeição de $H_0$), excluindo assim a possibilidade de usar um teste paramétrico. Como tal, recorremos aos testes não paramétricos de Kruskal-Wallis e de Dunn.  
 
-2) Kruskal-Wallis e Teste de Dunn
+2) Resultados dos testes de Kruskal-Wallis e de Dunn  
+
 ```{r, echo=FALSE}
 dunn.test(c(dados.all$atum, dados.all$biqueirao, dados.all$carapau, dados.all$cavala, dados.all$peixe.espada.preto, dados.all$sardinha, dados.all$outros.peixes.marinhos), rep(c("Atum","Biqueirão", "Carapau", "Cavala", "Peixe E. P.", "Sardinha", "Outros"), each=20))
 ```
 
-Através do teste de Kruskal-Wallis verificámos que existe, pelo menos, um valor médio diferente dos restantes (rejeição de $H_0$), pelo que usámos o teste de Dunn para determinar que os pares "biqueirão + atum", "carapau + biqueirão", "cavala + atum", "cavala + biqueirão", "outras espécies de peixe marinho + atum", "outras espécies de peixe marinho + biqueirão", "outras espécies de peixe marinho + carapau", "peixe espada preto + atum", "peixe espada preto + carapau", "peixe espada preto + cavala", "peixe espada preto + outras espécies de peixe marinho", "sardinha + atum", "sardinha + biqueirão", "sardinha + carapau" e "sardinha + peixe espada preto" apresentam valores médios diferentes.\
+Através do teste de Kruskal-Wallis verificámos que existe, pelo menos, um valor médio diferente dos restantes (rejeição de $H_0$), pelo que usámos o teste de Dunn para determinar que os pares "biqueirão + atum", "carapau + biqueirão", "cavala + atum", "cavala + biqueirão", "outras espécies de peixe marinho + atum", "outras espécies de peixe marinho + biqueirão", "outras espécies de peixe marinho + carapau", "peixe espada preto + atum", "peixe espada preto + carapau", "peixe espada preto + cavala", "peixe espada preto + outras espécies de peixe marinho", "sardinha + atum", "sardinha + biqueirão", "sardinha + carapau" e "sardinha + peixe espada preto" apresentam valores médios diferentes (rejeição de $H_0$).  
 
-#### Crustáceos
+#### Crustáceos  
 
-**Gráfico de evolução da captura de crustáceos ao longo do tempo**
+**Gráfico de evolução da captura de crustáceos ao longo do tempo**  
 
 ```{r, echo=FALSE, fig.width=6, fig.height=3}
 crustaceos <- filter(dados.all.long, especie %in% c("caranguejo", "gambas", "lagostim",  "outros.crustaceos"))
 
-ggplot(crustaceos, aes(ano, toneladas, color=especie)) + ggtitle("Crustáceos Capturados em Portugal") +
-theme(plot.title = element_text(hjust = 0.5), axis.title.y = element_text(margin=margin(r=20)), axis.title.x = element_text(margin=margin(t=10))) +
-geom_point() + geom_line() + ylab("Toneladas") + xlab("Ano") +
-scale_fill_discrete(name = "Espécies", labels = c("Caranguejo", "Gambas", "Lagostim",  "Outros")) +
-scale_color_discrete(name = "Espécies", labels = c("Caranguejo", "Gambas", "Lagostim",  "Outros"))
+ggplot(crustaceos, aes(ano, toneladas, color=especie)) +
+  ggtitle("Crustáceos Capturados em Portugal") +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.y = element_text(margin=margin(r=20)),
+        axis.title.x = element_text(margin=margin(t=10))) +
+  geom_point() +
+  geom_line() +
+  ylab("Toneladas") +
+  xlab("Ano") +
+  scale_fill_discrete(name = "Espécies",
+                      labels = c("Caranguejo", "Gambas", "Lagostim",  "Outros")) +
+  scale_color_discrete(name = "Espécies",
+                       labels = c("Caranguejo", "Gambas", "Lagostim",  "Outros"))
 ```
 
-Observando o gráfico correspondente às alterações na quantidade, em toneladas, de custáceos capturados ao longo dos anos em Portugal, podemos concluir que as gambas possuem uma grande variação de valores em relação às restantes espécies.\
+Observando o gráfico correspondente às alterações na quantidade, em toneladas, de custáceos capturados ao longo dos anos em Portugal, podemos concluir que as gambas possuem uma grande variação de valores em relação às restantes espécies.  
 
-**Testes de hipóteses**
+**Testes de hipóteses**  
 
-Para averiguar se os valores médios, em toneladas, de crustáceos capturados ao longo do tempo eram diferentes de espécie para espécie, começámos por investigar se era possível utilizar um teste paramétrico (ANOVA) para essa análise através de um teste à normalidade dos dados.\
+Para averiguar se os valores médios, em toneladas, de crustáceos capturados ao longo do tempo eram diferentes de espécie para espécie, começámos por determinar se era possível utilizar um teste paramétrico (ANOVA) para essa análise ao testar os seus pressupostos.  
 
-1) Normalidade
+1) P-values dos testes à normalidade (Shapiro-Wilk)  
+
 ```{r, echo=FALSE}
-crust.shapiro <- c(gambas=shapiro.test(dados.all$gambas)$p.value, lagostim=shapiro.test(dados.all$lagostim)$p.value, caranguejo=shapiro.test(dados.all$caranguejo)$p.value, outros=shapiro.test(dados.all$outros.crustaceos)$p.value); crust.shapiro
+c(gambas=shapiro.test(dados.all$gambas)$p.value, lagostim=shapiro.test(dados.all$lagostim)$p.value, caranguejo=shapiro.test(dados.all$caranguejo)$p.value, outros=shapiro.test(dados.all$outros.crustaceos)$p.value)
 ```
 
 Dado que rejeitamos $H_0$ para o lagostim, indicando que este não possui aproximação à distribuição normal, excluímos a possibilidade de usar um teste paramétrico para comparar os valores médios, recorrendo alternativamente aos testes não paramétricos de Kruskal-Wallis e de Dunn.
 
-2) Kruskal-Wallis e Teste de Dunn
+2) Resultados dos testes de Kruskal-Wallis e de Dunn  
+
 ```{r, echo=FALSE}
 dunn.test(c(dados.all$gambas, dados.all$lagostim, dados.all$caranguejo, dados.all$outros.crustaceos), rep(c("Gambas", "Lagostim", "Caranguejo", "Outros"), each=20))
 ```
 
-Após verificar através do teste de Kruskal-Wallis que existe, pelo menos, uma população diferente das restantes no seu valor médio (rejeição de $H_0$), usámos o teste de Dunn para concluir que os pares "gambas + caranguejo", "lagostim + caranguejo", "lagostim + gambas" e "outras espécies de crustáceos + lagostim" são os que apresentam valores médios diferentes (rejeição de $H_0$).\
+Após verificar através do teste de Kruskal-Wallis que existe, pelo menos, uma população diferente das restantes no seu valor médio (rejeição de $H_0$), usámos o teste de Dunn para concluir que os pares "gambas + caranguejo", "lagostim + caranguejo", "lagostim + gambas" e "outras espécies de crustáceos + lagostim" são os que apresentam valores médios diferentes (rejeição de $H_0$).  
 
-#### Moluscos
+#### Moluscos  
 
-**Gráfico de evolução da captura de moluscos ao longo do tempo**
+**Gráfico de evolução da captura de moluscos ao longo do tempo**  
 
 ```{r, echo=FALSE, fig.width=6, fig.height=3}
 moluscos <- filter(dados.all.long, especie %in% c("berbigao", "choco", "polvo", "outros.moluscos"))
 
-ggplot(moluscos, aes(ano, toneladas, color = especie)) + ggtitle("Moluscos capturados em Portugal") +
-theme(plot.title = element_text(hjust = 0.5), axis.title.y = element_text(margin = margin(r = 20)), axis.title.x = element_text(margin = margin(t = 10))) +
-geom_point() + geom_line() + ylab("Toneladas") + xlab("Ano") +
-scale_fill_discrete(name = "Espécies", labels = c("Berbigão", "Choco", "Polvo", "Outros")) +
-scale_color_discrete(name = "Espécies", labels = c("Berbigão", "Choco", "Polvo", "Outros"))
+ggplot(moluscos, aes(ano, toneladas, color = especie)) +
+  ggtitle("Moluscos capturados em Portugal") +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.y = element_text(margin = margin(r = 20)),
+        axis.title.x = element_text(margin = margin(t = 10))) +
+  geom_point() +
+  geom_line() +
+  ylab("Toneladas") +
+  xlab("Ano") +
+  scale_fill_discrete(name = "Espécies",
+                      labels = c("Berbigão", "Choco", "Polvo", "Outros")) +
+scale_color_discrete(name = "Espécies",
+                     labels = c("Berbigão", "Choco", "Polvo", "Outros"))
 ```
 
-Observando o gráfico correspondente às alterações na quantidade, em toneladas, de moluscos capturados ao longo dos anos em Portugal, podemos concluir que apenas o choco possui uma variação reduzida dos valores em relação às restantes espécies.\
+Observando o gráfico correspondente às alterações na quantidade, em toneladas, de moluscos capturados ao longo dos anos em Portugal, podemos concluir que apenas o choco possui uma variação reduzida dos valores em relação às restantes espécies.  
 
 **Testes de hipóteses**  
 
-Para averiguar se os valores médios, em toneladas, de moluscos capturados ao longo do tempo eram diferentes, começámos por investigar se era possível utilizar um teste paramétrico (ANOVA) para efetuar essa análise recorrendo a um teste de normalidade.\
+Para averiguar se os valores médios, em toneladas, de moluscos capturados ao longo do tempo eram diferentes, começámos por determinar se era possível utilizar um teste paramétrico (ANOVA) para efetuar essa análise ao testar os seus pressupostos. Primeiro, recorremos a um teste de normalidade.  
 
-1) Normalidade
+1) P-values dos testes à normalidade (Shapiro-Wilk)  
+
 ```{r, echo=FALSE}
-mol.shapiro <- c(berbigao=shapiro.test(dados.all$berbigao)$p.value, choco=shapiro.test(dados.all$choco)$p.value, polvo=shapiro.test(dados.all$polvo)$p.value, outros=shapiro.test(dados.all$outros.moluscos)$p.value); mol.shapiro
+c(berbigão=shapiro.test(dados.all$berbigao)$p.value, choco=shapiro.test(dados.all$choco)$p.value, polvo=shapiro.test(dados.all$polvo)$p.value, outros=shapiro.test(dados.all$outros.moluscos)$p.value)
 ```
 
-Uma vez que o resultado do teste à normalidade (não rejeição de $H_0$) revela que todas as espécies têm aproximação à distribuição normal, decidimos averiguar a igualdade das suas variâncias para determinar a viabilidade do teste paramétrico ANOVA para a análise dos respetivos valores médios.
+Uma vez que o resultado do teste à normalidade (não rejeição de $H_0$) revela que todas as espécies têm aproximação à distribuição normal, decidimos averiguar a homogeneidade das suas variâncias, sendo este outro pressuposto da ANOVA.  
 
-2) Igualdade das variâncias
+2) P-value do teste à homogeneidade das variâncias (Bartlett)  
+
 ```{r, echo=FALSE}
 bartlett.test(c(dados.all$berbigao, dados.all$choco, dados.all$polvo, dados.all$outros.moluscos), rep(c("Berbigão", "Choco", "Polvo", "Outros"), each=20))$p.value
 ```
 
-Ao rejeitarmos $H_0$ no teste das variâncias, descobrimos a existência de, pelo menos, uma espécie com variância diferente, concluindo assim que os pressupostos da ANOVA não são verificados. Desta forma, recorremos alternativamente aos testes não paramétricos de Kruskal-Wallis e de Dunn.
+Ao rejeitarmos $H_0$, descobrimos a existência de, pelo menos, uma espécie com variância diferente, concluindo assim que os pressupostos da ANOVA não são verificados. Desta forma, recorremos alternativamente aos testes não paramétricos de Kruskal-Wallis e de Dunn.  
 
-3) Kruskal-Wallis e Teste de Dunn
+3) Resultados dos testes de Kruskal-Wallis e de Dunn  
+
 ```{r, echo=FALSE}
 dunn.test(c(dados.all$berbigao, dados.all$choco, dados.all$polvo, dados.all$outros.moluscos), rep(c("Berbigão", "Choco", "Polvo", "Outros"), each=20))
 ```
 
-Dado que rejeitamos $H_0$ no teste de Kruskal-Wallis, verificamos que existe, pelo menos, um valor médio diferente dos restantes, tendo concluído através do teste de Dunn que esses valores são diferentes para todos os pares de espécies (rejeição de $H_0$).\
+Dado que rejeitamos $H_0$ no teste de Kruskal-Wallis, verificamos que existe, pelo menos, um valor médio diferente dos restantes, tendo concluído através do teste de Dunn que esses valores são diferentes para todos os pares de espécies (rejeição de $H_0$).  
 
-### Desenvolvimento da ShinyApp
+### Desenvolvimento da ShinyApp  
 
-De maneira a implementar na ShinyApp os diversos gráficos construídos ao longo deste relatório, recorremos à utilização de diferentes funções para permitir a sua visualização interativa com base num intervalo de anos selecionado pelo utilizador. A seleção deste intervalo pelo utilizador foi conseguida através da criação de um slider com a função `sliderInput`, definindo assim um vetor com os limites mínimo e máximo do eixo do x dos gráficos a serem produzidos. Posteriormente, a construção e formatação desses gráficos foi realizada com recurso às funções `renderPlot` e `plotOutput`.
+De maneira a implementar na ShinyApp os diversos gráficos construídos ao longo deste relatório, recorremos à utilização de diferentes funções para permitir a sua visualização interativa com base num intervalo de anos selecionado pelo utilizador. A seleção deste intervalo pelo utilizador foi conseguida através da criação de um slider com a função `sliderInput`, definindo assim um vetor com os limites mínimo e máximo do eixo do x dos gráficos a serem produzidos. Posteriormente, a formataç
+ao e construção desses gráficos foi realizada com recurso às funções `plotOutput` e `renderPlot`.  
 
-Em particular para os gráficos relativos às diferentes espécies estudadas neste conjunto de dados, foi necessário criar um input das diferentes opções de espécies para cada tipo de animais que o utilizador pode escolher através da função `eventReactive`. Esta filtração de dados foi armazenada numa variável para posterior utilização na construção dos gráficos. Por fim, aplicámos a função `actionButton`para gerar um botão interativo que, quando selecionado, resulta na criação de uma representação gráfica dos dados selecionados.
+Em particular para os gráficos relativos às diferentes espécies estudadas neste conjunto de dados, foi necessário criar um input das diferentes opções de espécies para cada tipo de animais que o utilizador pode escolher através da função `eventReactive`. Esta filtração de dados foi armazenada numa variável para posterior utilização na construção dos gráficos. Por fim, aplicámos a função `actionButton` para gerar um botão interativo que, quando selecionado, resulta na criação de uma representação gráfica dos dados selecionados.
 
 ```{r, echo=FALSE, out.width="80%", fig.align='center'}
-knitr::include_graphics("C:/Users/mafal/Downloads/App1.png")
-knitr::include_graphics("C:/Users/mafal/Downloads/App2.png")
+# knitr::include_graphics("C:/Users/mafal/Downloads/App1.png")
+# knitr::include_graphics("C:/Users/mafal/Downloads/App2.png")
 ```
 
 ```{r, echo=FALSE, out.width="20%", fig.align='center'}
-knitr::include_graphics("C:/Users/mafal/Downloads/App4.png")
+# knitr::include_graphics("C:/Users/mafal/Downloads/App4.png")
 ```
 
 ### Discussão de resultados e conclusão
