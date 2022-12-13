@@ -36,7 +36,7 @@ pre {
 
 *****
 ```{r, echo=FALSE, out.width="25%", fig.align='center'}
-knitr::include_graphics("C:/Users/mafal/Downloads/logo.png")
+knitr::include_graphics("FCUL_logo.png")
 ```
 
 ### Resumo  
@@ -341,12 +341,12 @@ ao e construção desses gráficos foi realizada com recurso às funções `plot
 Em particular para os gráficos relativos às diferentes espécies estudadas neste conjunto de dados, foi necessário criar um input das diferentes opções de espécies para cada tipo de animais que o utilizador pode escolher através da função `eventReactive`. Esta filtração de dados foi armazenada numa variável para posterior utilização na construção dos gráficos. Por fim, aplicámos a função `actionButton` para gerar um botão interativo que, quando selecionado, resulta na criação de uma representação gráfica dos dados selecionados.
 
 ```{r, echo=FALSE, out.width="80%", fig.align='center'}
-knitr::include_graphics("C:/Users/mafal/Downloads/App1.png")
-knitr::include_graphics("C:/Users/mafal/Downloads/App2.png")
+knitr::include_graphics("app1.png")
+knitr::include_graphics("app2.png")
 ```
 
 ```{r, echo=FALSE, out.width="20%", fig.align='center'}
-knitr::include_graphics("C:/Users/mafal/Downloads/App4.png")
+knitr::include_graphics("app3.png")
 ```
 
 ### Discussão de resultados e conclusão
